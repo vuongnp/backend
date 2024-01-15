@@ -15,12 +15,14 @@ import com.vuongnp.film.concurrency.repository.RepositoryInterface;
 public class ConcurrencyApplication {
 	private static int TRANSACTIONS_PER_MACHINE = 1000;
 
-	private static void job1(BusinessLogic businessLogic, User user) throws Exception {
+	private static synchronized void job1(BusinessLogic businessLogic, User user) throws Exception {
+		// System.out.println("+++");
         businessLogic.addToFavoriteMovies(user, "1");
 		businessLogic.rateMovie(user, "1", 3);
     }
 
-	private static void job2(BusinessLogic businessLogic, User user) throws Exception {
+	private static synchronized void job2(BusinessLogic businessLogic, User user) throws Exception {
+		// System.out.println("---");
 		businessLogic.removeFromFavoriteMovies(user, "1");
 		businessLogic.rateMovie(user, "1", 1);
     }

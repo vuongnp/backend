@@ -33,14 +33,14 @@ public class InMemoryRepository implements RepositoryInterface{
        if(!userFavoriteMap.containsKey(userID)){
             // userFavoriteMap.put(userID, new HashSet<>());
             userFavoriteMap.put(userID, new CopyOnWriteArrayList<>());
-        }else{
+        }
+        else{
             if(userFavoriteMap.get(userID).contains(movieID)){
-                System.out.println("MovieId " + movieID + " was existed in the favorite list of userId " + userID);
-            }else{
-                userFavoriteMap.get(userID).add(movieID);
+                System.out.println("MovieId " + movieID + " was existed in the favorites list of userId " + userID);
+                return;
             }
         }
-        
+        userFavoriteMap.get(userID).add(movieID);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class InMemoryRepository implements RepositoryInterface{
             throw new RuntimeException("Cannot find userID: " + userID);
        }else{
             if(!userFavoriteMap.get(userID).contains(movieID)){
-                throw new RuntimeException(movieID + " is not in favorite movies of UserID " + userID);
+                throw new RuntimeException(movieID + " is not in the favorites list of UserID " + userID);
             }else{
                 userFavoriteMap.get(userID).remove(movieID);
             }
